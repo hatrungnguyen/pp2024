@@ -1,5 +1,5 @@
 def numofstudent():
-    return int(input("Number of students in class:"));
+    return int(input("Number of students in class:"))
 def studentinformation():
     students = {}
     students["id"] = input("Enter student id:")
@@ -50,9 +50,9 @@ def main():
         1. input number courses
         2.input infor students
         3.input infor courses
-        4.input mark
-        5.show courese
-        6.show studets
+        6.input mark
+        4.show courese
+        5.show studets
         7.exit""")
         option = int(input("Take tour choice :"))
 
@@ -76,6 +76,9 @@ def main():
         elif option == 7:
             print("Thanks for using")
             break
+        elif option == 6:
+            course_id = input("Enter the course id to input marks: ")
+            inputmark(students, course_id)
         else:
             print("Wrong!Please choose from the list")
 

@@ -1,15 +1,24 @@
-def get_course_details():
-    course_name = input("Enter the course name: ")
-    course_code = input("Enter the course code: ")
-    return course_name, course_code
+import math
 
-def get_student_details():
-    student_name = input("Enter the student name: ")
-    student_id = input("Enter the student ID: ")
-    return student_name, student_id
+def input_mark(student, course_id):
+    mark = input(f"Mark for {student.stuentName} in {course_id}")
+    rounded_mark = math.floor(float(mark) * 10) / 10
+    student.marks[course_id] = rounded_mark
 
-def get_mark_details():
-    course_code = input("Enter the course code: ")
-    student_id = input("Enter the student ID: ")
-    mark = float(input("Enter the mark: "))
-    return course_code, student_id, mark
+def number_student():
+    return int(input("Enter number student:"))
+
+def student_info():
+    student_id = input("Enter ID:")
+    student_name = input("Enter name:")
+    student_birthday = input("Enter Dob:")
+    return student_id,student_name,student_birthday
+
+def number_course():
+    return int(input("Number courses: "))
+
+def course_info():
+    course_id = input("Enter id:")
+    course_name = input("Enter name:")
+    return course_id, course_name
+

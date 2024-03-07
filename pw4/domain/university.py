@@ -1,17 +1,33 @@
 class University:
-    def __init__(self, name):
-        self.name = name
-        self.courses = []
+    def __init__(self):
         self.students = []
+        self.courses = []
 
-    def add_course(self, course):
-        self.courses.append(course)
+    def input_mark(self, courseId):
+        for student in self.students:
+            student.inputmark(courseId)
 
-    def add_student(self, student):
-        self.students.append(student)
+    def listcourses(self):
+        if len(self.courses) == 0:
+            print("No courses")
+        else:
+            print("Courses list")
+            for i, course in enumerate(self.courses):
+                print(f"{i + 1}. id: {course.courseID}, Name:{course.courseName}")
 
-    def get_courses(self):
-        return self.courses
+    def liststudets(self):
+        if len(self.students) == 0:
+            print("No Studets")
+        else:
+            print("Student list:")
+            for i, student in enumerate(self.students):
+                print(f"{i + 1}. id : {student.studentId}, name : {student.studentName},DoB : {student.studentDob}")
 
-    def get_students(self):
-        return self.students
+    def caculated_GPA(self, studentID):
+        for student in self.students:
+            if student.studentId == studentID:
+                GPA = student.caculated_Gpa()
+                print(f"GPA for {student.studentName} = {GPA}")
+                break
+            else:
+                print(f"Student {student.studentId} not found")

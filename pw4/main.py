@@ -1,46 +1,47 @@
-from input import get_mark_details, get_course_details, get_student_details
-from ouput import display_mark_details, display_course_details, display_student_details
-from domain.student import Student
+import curses
+from input import  *
+from ouput import *
 from domain.course import Course
+from domain.student import Student
 from domain.university import University
 
-
-def main():
-    unversity = input("Enter unversity name:")
-    unversity = University(unversity)
-
-    course_name, course_code = get_course_details()
-    course = Course(course_name, course_code)
-    unversity.add_course(course)
-
-    student_name, student_id = get_student_details()
-    student = Student(student_name, student_id)
-    unversity.add_student(student)
-
-    student.enroll_course(course)
-    course.add_student(student)
-
-    course_code, student_id, mark = get_mark_details()
-    course = None
-    student =None
-
-    for c in unversity.get_courses():
-        if c.code == course_code:
-            course = c
-            break
-
-    for s in  unversity.get_students():
-        if s.student_id == student_id:
-            student = s
-            break
-
-    if course and student:
-        display_course_details(course.name, course.code)
-        display_student_details(student.name, student.student_id)
-        display_mark_details(course.code, student.student_id, mark)
-    else:
-        print("Not found information")
-
-
 if __name__ == "__main__":
-    main()
+    result = University()
+    stdscr = make_curses()
+
+    while True:
+        menu(stdscr)
+        option = int(stdscr.getstr().decode())
+
+        if option == 0:
+            num_student = number_student()
+        elif option == 1:
+            num_courses = number_course()
+        elif option == 2:
+            for i in range(num_student):
+                student_id, student_name, student_birthday = student_info()
+                student = Student(student_id, student_name, student_birthday)
+                result.students.append(student)
+
+        elif option ==3:
+            for i in range(num_courses):
+                course_id, course_name = course_info()
+                course = Course(course_id, course_name)
+                result.courses.append(course)
+
+        elif option == 4:
+            result.listcourses()
+            stdscr.getch()
+        elif option == 5:
+            result.liststudets()
+            stdscr.getch()
+        elif option == 6:
+            course_id = input("Enter course ID to marks:")
+            result.input_mark(course_id)
+        elif option== 7:
+            close_curse(stdscr)
+            break
+        else:
+            stdscr.addstr("chosse again!!!!")
+            stdscr.refresh()
+            stdscr.getch()

@@ -1,15 +1,30 @@
-def display_course_details(course_name, course_code):
-    print("Course Details:")
-    print(f"Course Name: {course_name}")
-    print(f"Course Code: {course_code}")
+import curses
 
-def display_student_details(student_name, student_id):
-    print("Student Details:")
-    print(f"Student Name: {student_name}")
-    print(f"Student ID: {student_id}")
+def make_curses():
+    stdscr = curses.initscr()
+    curses.noecho()
+    curses.cbreak()
+    stdscr.keypad(True)
+    return stdscr
 
-def display_mark_details(course_code, student_id, mark):
-    print("Mark Details:")
-    print(f"Course Code: {course_code}")
-    print(f"Student ID: {student_id}")
-    print(f"Mark: {mark}")
+def menu(stdscr):
+    stdscr.clear()
+    stdscr.addstr("Menu:\n")
+    stdscr.addstr("0. Input number of students\n")
+    stdscr.addstr("1. Input number of courses\n")
+    stdscr.addstr("2. Input student information\n")
+    stdscr.addstr("3. Input course information\n")
+    stdscr.addstr("4. Show courses\n")
+    stdscr.addstr("5. Show students\n")
+    stdscr.addstr("6. Input marks\n")
+    stdscr.addstr("7. Exit\n")
+    stdscr.addstr("Enter your choice (Do not enter character): ")
+
+
+def close_curse(stdscr):
+    stdscr.addstr("Thanks for using.")
+    stdscr.refresh()
+    curses.nocbreak()
+    stdscr.keypadd(False)
+    curses.echo()
+    curses.endwin()

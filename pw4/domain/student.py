@@ -1,11 +1,24 @@
+import numpy as np
+
 class Student:
-    def __init__(self, name, student_id):
-        self.name = name
-        self.student_id = student_id
-        self.courses = []
+    def __init__(self, studentId, studentName, studentDob):
+        self.studentId = studentId
+        self.studentName = studentName
+        self.studentDob = studentDob
+        self.marks = {}
 
-    def enroll_course(self, course):
-        self.courses.append(course)
+    def studentmark(self, courseId):
 
-    def get_courses(self):
-        return self.courses
+        if courseId in self.marks:
+            mark = self.marks[courseId]
+            print(f"Student {self.studentName}: {mark}")
+        else:
+            print(f"Student {self.studentName}: no mark for {courseId}")
+
+
+    def caculated_Gpa(self):
+        if len(self.marks) == 0:
+            return 0.0
+        marks = np.array(list(self.marks.values()))
+        gpa = np.mean(marks)
+        return gpa

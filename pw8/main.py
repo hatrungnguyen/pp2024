@@ -6,10 +6,10 @@ from domain.student import Student
 from domain.university import University
 import pickle
 import gzip
+import threading
 
-
-File = 'data.pickle.gz'
-
+File = 'zipto1.gz'
+lock = threading.Lock()
 def save(data):
     with gzip.open(File, 'wb') as file:
         pickle.dump(data, file)
@@ -18,7 +18,12 @@ def load():
         with gzip.open(File, 'rb') as file:
             return pickle.load(file)
     except FileNotFoundError:
-        return  University()
+        return University()
+
+def data_thread(data):
+    lock.acquire()
+    save(data)
+    lock.release()
 
 if __name__ == "__main__":
     result = load()
@@ -37,7 +42,7 @@ if __name__ == "__main__":
                 student_id, student_name, student_birthday = student_info()
                 student = Student(student_id, student_name, student_birthday)
                 result.students.append(student)
-            save(result)
+            threading.Thread(target=data_thread, args=(result,)).start()
 
 
 
@@ -46,7 +51,7 @@ if __name__ == "__main__":
                 course_id, course_name = course_info()
                 course = Course(course_id, course_name)
                 result.courses.append(course)
-            save(result)
+            threading.Thread(target=data_thread, args=(result,)).start()
 
 
 
@@ -59,7 +64,7 @@ if __name__ == "__main__":
         elif option == 6:
             course_id = input("Enter course ID to marks:")
             result.input_mark(course_id)
-            save(result)
+            threading.Thread(target=data_thread, args=(result,)).start()
 
         elif option== 7:
             close_curse(stdscr)
